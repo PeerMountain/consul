@@ -1,13 +1,15 @@
-before_script: - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+before_script: 
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
 
 
 deploy:
   script:
     - export TAG="${CI_BUILD_REF_NAME}"
-    - docker stack deploy -c docker-compose.yml writer
+    - docker stack deploy -c docker-compose.yml consul
   stage: deploy
   tags:
     - shell
+    - pm01
   only:
     - tags
     - triggers
